@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
+<context:component-scan base-package="com.zhiyou100.jd.web.controller"/>
+<mvc:annotation-driven/>
+<mvc:default-servlet-handler/>
+<!-- 
+	转换器工厂,创建转换器的
+	如果将来有需求,需要将提交数据进行格式化
+ -->
+<!-- <mvc:annotation-driven conversion-service="conversionService"/>
+
+
+<bean name="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+	<property name="converters">
+		<set>
+ 			<bean class="com.zhiyou100.jd.util.DateConvert"/>
+		</set>
+	</property>
+</bean> -->
+
+
+<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+	<property name="prefix" value="/WEB-INF/view/"></property>
+	<property name="suffix" value=".jsp"></property>
+</bean>
+
+
+<!--  
+	配置全局异常处理
+
+-->
+<bean class="com.zhiyou100.jd.web.exception.CustomException"/>
+<!-- 
+	配置文件上传
+	名字必须是 multipartResolver
+	可以设置上传文件的大小单位是B
+ -->
+<bean name="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">	
+<property name="maxUploadSize" value="6291456"></property>
+</bean>
+
+<!-- <mvc:interceptors>
+	<mvc:interceptor>
+		
+		配置拦截器的拦截规则
+		/**表示拦截所有
+	
+		<mvc:mapping path="/**"/>
+		 
+			拦截器配置排除,一般用来配置静态资源放行,
+			当前端控制器设置为/或者/*的时候
+			如果前端控制器配置成*.action,在请求静态资源的时候,是根本不会经过拦截器的,所以不需要
+			配置拦截器的排除
+		
+		<mvc:exclude-mapping path="/css/**"/>
+		<mvc:exclude-mapping path="/image/**"/>
+		<mvc:exclude-mapping path="/js/**"/>
+		<mvc:exclude-mapping path="/lib/**"/>
+		<bean class="com.zhiyou100.jd.util.CustomInterceptor"/>
+	</mvc:interceptor>
+
+
+</mvc:interceptors> -->
+
+
+</beans>
